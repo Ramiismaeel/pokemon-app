@@ -1,5 +1,7 @@
 package training.pokemonapp.controller;
 
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import training.pokemonapp.service.PokemonService;
 
 @RestController
 @RequestMapping("/api/pokemon")
+@Validated
 public class PokemonController {
 
     private final PokemonService service;
@@ -18,7 +21,7 @@ public class PokemonController {
     }
 
     @GetMapping("/{name}")
-    public PokemonDto getByName(@PathVariable String name) {
+    public PokemonDto getByName(@PathVariable @NotBlank String name) {
         return service.getPokemonByName(name);
     }
 }

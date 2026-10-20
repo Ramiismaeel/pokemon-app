@@ -1,9 +1,12 @@
 package training.pokemonapp.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import training.pokemonapp.dto.PokemonDto;
 import training.pokemonapp.dto.PokemonResponse;
+import training.pokemonapp.exception.PokemonApiUnavailableException;
+import training.pokemonapp.exception.PokemonNotFoundException;
 
 import java.util.List;
 
@@ -23,9 +26,12 @@ public class PokemonService {
         PokemonResponse response = restClient.get()
                 .uri("/"+ name)
                 .retrieve()
+                .onStatus(status -> status.value() == HttpStatus.NOT_FOUND.value(),  (req, res) -> {
+                    throw new PokemonNotFoundException(name);
+                })
                 .body(PokemonResponse.class);
         if(response == null) {
-            throw new RuntimeException("no Pokemon with name "+ name);
+            throw new PokemonApiUnavailableException("Bad getWay, the api not respond");
         }
         return getDto(response);
 
