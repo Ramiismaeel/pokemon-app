@@ -7,8 +7,6 @@ import training.pokemonapp.dto.PokemonDto;
 import training.pokemonapp.dto.PokemonResponse;
 import training.pokemonapp.exception.PokemonApiUnavailableException;
 import training.pokemonapp.exception.PokemonNotFoundException;
-import training.pokemonapp.repo.FavoriteRepository;
-
 import java.util.List;
 
 @Service
@@ -32,7 +30,7 @@ public class PokemonService {
                 })
                 .body(PokemonResponse.class);
         if(response == null) {
-            throw new PokemonApiUnavailableException("Bad GateWay, PokéAPI returned an empty response");
+            throw new PokemonApiUnavailableException("Bad GateWay, PokeAPI returned an empty response");
         }
         return toDto(response);
 
