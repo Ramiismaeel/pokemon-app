@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.web.client.RestClient;
 import training.pokemonapp.dto.*;
 import training.pokemonapp.exception.PokemonApiUnavailableException;
+import training.pokemonapp.repo.FavoriteRepository;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -27,6 +28,8 @@ class PokemonServiceTest {
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     RestClient.Builder builder;
+
+
 
 
     PokemonService service;

@@ -7,6 +7,7 @@ import training.pokemonapp.dto.PokemonDto;
 import training.pokemonapp.dto.PokemonResponse;
 import training.pokemonapp.exception.PokemonApiUnavailableException;
 import training.pokemonapp.exception.PokemonNotFoundException;
+import training.pokemonapp.repo.FavoriteRepository;
 
 import java.util.List;
 
@@ -31,13 +32,13 @@ public class PokemonService {
                 })
                 .body(PokemonResponse.class);
         if(response == null) {
-            throw new PokemonApiUnavailableException("Bad getWay, the api not respond");
+            throw new PokemonApiUnavailableException("Bad GateWay, PokéAPI returned an empty response");
         }
-        return getDto(response);
+        return toDto(response);
 
     }
 
-    private PokemonDto getDto(PokemonResponse response) {
+    private PokemonDto toDto(PokemonResponse response) {
         String pictureUrl;
         if(response.sprites() == null || response.sprites().other() == null || response.sprites().other().officialArtwork() == null) {
             pictureUrl = null;
@@ -52,4 +53,5 @@ public class PokemonService {
         return new PokemonDto(String.valueOf(response.id()), response.name(), pictureUrl, response.height(), response.weight(), types);
 
     }
+
 }
